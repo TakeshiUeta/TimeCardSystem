@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--Mapperとxmlのマッピング -->
+<mapper namespace="com.example.Mapper.UserMapper">
+	<resultMap type="com.example.form.User" id="user">
+		<id column="user_id" property="userId" />
+		<result column="password" property="password" />
+		<result column="user_name" property="name" />
+		<collection property="resultList" resultMap="result"
+			columnPrefix="t_result_" />
+	</resultMap>
+
+	<resultMap type="com.example.form.Result" id="result">
+		<id column="result_id" property="resultId" />
+		<result column="go_time" property="goTime" />
+		<result column="out_time" property="outTime" />
+		<result column="user_id" property="userId" />
+	</resultMap>
+
+	<!--ユーザー1件検索 -->
+	<select id="userFindOne" resultMap="user">
+		select
+		*
+		from
+		t_user
+		where
+		user_id=#{userId}
+	</select>
+	<!--結果テーブルの最後に登録されたものでユーザーIDが一致するものを検索する -->
+	<select id="fainalResult" resultMap="result">
+		select
+		*
+		from
+		t_result
+		where
+		user_id=#{userId}
+		ORDER
+		BY
+		result_id DESC LIMIT 1
+	</select>
+
+	<!--結果テーブルの最後に登録されたものを検索する -->
+	<select id="maxResultId" resultMap="result">
+		select
+		*
+		from
+		t_result
+		ORDER
+		BY
+		result_id DESC LIMIT 1
+	</select>
+
+	<!--出勤1件登録 -->
+	<insert id="gotimeOne">
+		INSERT INTO
+		t_result(
+		result_id,
+		go_time,
+		user_id
+		)values(
+		#{resultId},
+		CURRENT_TIMESTAMP,
+		#{userId}
+		)
+	</insert>
+
+	<!--退勤1件登録 -->
+	<update id="outTimeOne">
+		update
+		t_result
+		set
+		out_time=CURRENT_TIMESTAMP
+		where
+		result_id=#{resultId}
+	</update>
+
+	<!--ユーザーを全件取得  -->
+	<select id="userFindAll" resultMap="user">
+		select * from t_user 
+	</select>
+	
+	<!--ユーザーIDと紐付いた結果をすべて取得A-->
+	<select id="resultUIdAll" resultMap="user">
+		select
+			 t_user.user_id
+			,t_user.user_name
+			,t_result.result_id as t_result_result_id
+			,t_result.go_time as t_result_go_time
+			,t_result.out_time as t_result_out_time
+			,t_result.user_id as t_result_user_id
+		from
+			t_user
+		left join
+			t_result
+		on
+			t_user.user_id = t_result.user_id
+		where
+			t_user.user_id = #{userId}
+	</select>
+	
+	<!--ユーザーIDと紐付いた結果を全て取得B -->
+	<select id="resultFindAllByUserId" resultMap="result">
+		select 
+			*
+		from
+			t_result 	
+		where
+			user_id = #{userId}
+	</select>
+</mapper>
+	

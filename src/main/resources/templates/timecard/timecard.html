@@ -1,0 +1,50 @@
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<meta charset="UTF-8">
+	</meta>
+	<meta name="viewport" content="width=device-width,initial-scale=1,shrink-to-fit=no">
+	<!--CSS読込-->
+	<link rel="stylesheet" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}">
+	<!--js読込-->
+	<script th:src="@{/webjars/jquery/jquery.min.js}" defer></script>
+	<script th:src="@{/webjars/bootstrap/js/bootstrap.min.js}" defer></script>
+	</meta>
+
+	<title>TimeCard</title>
+</head>
+
+<body>
+	<div　class="text-center">
+		<h1>TimeCard</h1>
+	</div>
+	<h2　class="text-center">現在時刻<h3 id="real-time"></h3>
+	</h2>
+	<script type="text/javascript">
+		function Time() {
+			var realTime = new Date();
+			var year = realTime.getFullYear();
+			var month = ('0' + (realTime.getMonth() + 1)).slice(-2);
+			var day = ('0' + realTime.getDate()).slice(-2);
+			var hour = ('0' + realTime.getHours()).slice(-2);
+			var minutes = ('0' + realTime.getMinutes()).slice(-2);
+			var seconds = ('0' + realTime.getSeconds()).slice(-2);
+			var text = year + "/" + month + "/" + day + " " + hour + ":" + minutes + ":" + seconds;
+			document.getElementById("real-time").innerHTML = text;
+		}
+		setInterval('Time()', 1000);</script>
+	<form method="POST" th:action="@{/timecard/result}">
+		<div>
+		<!--出勤ボタン-->
+		<button type="submit" name="goTime">
+			出勤
+		</button>
+		<!--退勤ボタン-->
+		<button type="submit" name="outTime">
+			退勤
+		</button>
+		</div>
+	</form>	
+</body>
+
+</html>

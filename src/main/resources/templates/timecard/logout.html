@@ -1,0 +1,28 @@
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<meta charset="UTF-8">
+	</meta>
+	<meta name="viewport" content="width=device-width,initial-scale=1,shrink-to-fit=no">
+	<!--CSS読込-->
+	<link rel="stylesheet" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}">
+	<!--js読込-->
+	<script th:src="@{/webjars/jquery/jquery.min.js}" defer></script>
+	<script th:src="@{/webjars/bootstrap/js/bootstrap.min.js}" defer></script>
+	</meta>
+
+	<title>ログアウト</title>
+</head>
+
+<body>
+	<div class="text-center">
+		<h1>ログアウト</h1>
+	</div>	
+	<div class="text-center">
+		<form method="GET" th:action="@{/timecard/userlogin}">
+			<input type="submit" class="btn btn-primary" value="ログイン画面に戻る" />
+		</form>
+	</div>
+</body>
+
+</html>

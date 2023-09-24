@@ -1,0 +1,52 @@
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<meta charset="UTF-8">
+	</meta>
+	<meta name="viewport" content="width=device-width,initial-scale=1,shrink-to-fit=no">
+	<!--CSS読込-->
+	<link rel="stylesheet" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}">
+	<!--js読込-->
+	<script th:src="@{/webjars/jquery/jquery.min.js}" defer></script>
+	<script th:src="@{/webjars/bootstrap/js/bootstrap.min.js}" defer></script>
+	</meta>
+
+	<title>勤怠履歴</title>
+</head>
+
+<body>
+	<div　class="text-center">
+		<h1>勤怠履歴</h1>
+	</div>
+	
+	<form method="GET" th:action="@{/timecard/logout}">
+		<input class="btn btn-primary" type="submit" value="ログアウト">
+	</form>
+	
+	<div th:object="${session.user}">
+		<h3>
+			<span 　th:text="*{userId}"></span>
+			<span 　th:text="*{name}"></span>さん
+		</h3>
+	</div>
+	<div>
+		<table>
+		<table class="table table-striped table-bordered table-hover">
+			<thead class="thead-light">
+					<th>勤怠ID</th>
+					<th>出勤時間</th>
+					<th>退勤時間</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr th:each="item:${resultList}">
+					<td th:text="${item.resultId}"></td>
+					<td th:text="${item.goTime}"></td>
+					<td th:text="${item.outTime}"></td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+</body>
+
+</html>
