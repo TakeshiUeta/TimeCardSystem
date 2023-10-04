@@ -23,4 +23,8 @@ public interface UserService {
 	public List<Result> getresultFindAllByUserId(String userId);
 	/*ユーザー全件表示*/
 	public List<User> getUserFindAll();
+	/*ユーザーIDのMAX値検索*/
+	public String getFindainalUserId();
+	/*ユーザー1件登録*/
+	public void userRegist(String userId,String password,String name);
 }

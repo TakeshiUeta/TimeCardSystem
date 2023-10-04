@@ -55,12 +55,20 @@ public class UserServiceImp implements UserService {
 	public List<Result> getresultFindAllByUserId(String userId){
 		return mapper.resultFindAllByUserId(userId);
 	}
-
 	
 	/*ユーザー全件表示*/
 	@Override
 	public List<User> getUserFindAll(){
 		return mapper.userFindAll();
+	}
+	/*ユーザーIDのMAX値検索*/
+	public String getFindainalUserId() {
+		return mapper.fainalUserId();
+	}
+	/*ユーザー1件登録*/
+	@Override
+	public void userRegist(String userId,String password,String name) {
+		mapper.userRegistOne(userId,password,name);
 	}
 	
 }

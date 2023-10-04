@@ -21,8 +21,14 @@
 		<form method="GET" th:object="${user}" th:action="@{/timecard/timecard}">
 			<div>ユーザーID：<input type="text" th:field="*{userId}" /></div>
 			<div>PassWord：<input type="text" th:field="*{password}" /></div>
-			<input type="submit" value="ログイン" />
+			<input type="submit" class="btn btn-primary" value="ログイン" />
+			<input type="reset" class="btn btn-warning" value="クリア" />
 		</form>
+		<div>
+			<form method="GET" th:action="@{/timecard/userRegist}">
+				<input type="submit" value="ユーザー登録" />
+			</form>
+		</div>
 	</div>
 </body>
 

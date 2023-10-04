@@ -23,7 +23,6 @@ public class UserController {
 	private UserService userService;
 	@Autowired
 	private HttpSession session;
-	
 	/** ログイン画面を表示 */
 	@GetMapping("/userlogin")
 	public String getUserlogin(@ModelAttribute User user) {
@@ -49,7 +48,49 @@ public class UserController {
 		session.setAttribute("user", user);
 		return "/timecard/timecard";
 	}
-
+	
+	/**ユーザー登録画面に遷移*/
+	@GetMapping("/userRegist")
+	public String getUserRegist(Model model,@ModelAttribute User user) {
+		return "/timecard/userRegist";
+	}
+	/*ユーザー登録処理**/
+	@PostMapping("/userRegist")
+	public String postUserRegist(Model model,@ModelAttribute User user) {
+		//現在のユーザーIDのMax値を求める
+		String beginMaxuserId = userService.getFindainalUserId();
+		//IDの文字列の長さを求める
+		int uIdlength = beginMaxuserId.length();
+		//数値部分だけ抜き出す
+		String uIdValue = beginMaxuserId.substring(uIdlength-4,uIdlength); 
+		//int型にキャスト
+		int uIdInt = Integer.parseInt(uIdValue);
+		//キャストしたものに+1した変数を作成
+		int maxUidValueInt = uIdInt+1;
+		// maxUidValueIntにつける"UR0_i"を格納する変数を作成
+		String incValue = "";
+		// maxUidValueIntが10未満、100未満、1000未満の場合の時、IDに付属する部分を作成する
+		if (maxUidValueInt < 10) {
+			incValue = "RE000";
+		} else if (maxUidValueInt < 100) {
+			incValue = "RE00";
+		} else if (maxUidValueInt < 1000) {
+			incValue = "RE0";
+		} else {
+			incValue = "RE";
+		}
+		//最大値を作成する
+		String maxUId =incValue + Integer.toString(maxUidValueInt);
+		//入力値をそれぞれGetする
+		String password = user.getPassword();
+		String name = user.getName();
+		//登録処理
+		userService.userRegist(maxUId, password, name);
+		return "/timecard/userRegist";
+	}
+	
+	
+	
 	/** 出勤処理 */
 	@PostMapping(value = "/result", params = "goTime")
 	public String goTimeResult(Model model) {

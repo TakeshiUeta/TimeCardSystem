@@ -26,6 +26,26 @@
 		where
 		user_id=#{userId}
 	</select>
+
+	<!--ユーザーIDのMax値を求める  -->
+	<select id="fainalUserId" resultMap="user">
+		select max(user_id) from t_user; 	
+	</select>
+
+	<!--ユーザー1件登録-->
+	<insert id="userRegistOne">
+		insert into 
+		t_user(
+			 user_id
+			,password
+			,user_name
+		)values(
+			  #{userId}
+			 ,#{password}
+			 ,#{name}
+		) 
+	</insert>
+	
 	<!--結果テーブルの最後に登録されたものでユーザーIDが一致するものを検索する -->
 	<select id="fainalResult" resultMap="result">
 		select
@@ -49,7 +69,7 @@
 		BY
 		result_id DESC LIMIT 1
 	</select>
-
+	
 	<!--出勤1件登録 -->
 	<insert id="gotimeOne">
 		INSERT INTO

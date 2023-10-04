@@ -18,7 +18,7 @@ public class User {
 	/**
 	 * コンストラクタ
 	 */
-	User() {
+	 public User() {
 	}
 
 	/**
@@ -27,7 +27,7 @@ public class User {
 	 * @param password パスワード
 	 * @param name     名前
 	 */
-	User(String userId, String password, String name) {
+	 public User(String userId, String password, String name) {
 		this.userId = userId;
 		this.password = password;
 		this.name = name;

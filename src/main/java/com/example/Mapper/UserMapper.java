@@ -25,4 +25,8 @@ public interface UserMapper {
 	public List<Result> resultFindAllByUserId(String userId);
 	/*ユーザー全件表示*/
 	public List<User> userFindAll();
+	/*ユーザーIDのMAX値検索*/
+	public String fainalUserId();
+	/*ユーザー登録*/
+	public void userRegistOne(String userId,String password,String name); 
 }
